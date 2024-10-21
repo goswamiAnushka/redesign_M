@@ -7,13 +7,19 @@ const Tasks: React.FC = () => {
   ];
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow">
+    <div className="p-4 bg-white rounded-lg shadow space-y-4">
       <h2 className="font-bold text-xl mb-4">Tasks</h2>
-      <ul>
+      <ul className="space-y-2">
         {tasks.map((task) => (
-          <li key={task.id} className="mb-2">
-            <input type="checkbox" checked={task.completed} className="mr-2" />
-            {task.title}
+          <li key={task.id} className="flex items-center">
+            <input
+              type="checkbox"
+              checked={task.completed}
+              className="mr-2 h-4 w-4 text-orange-600 focus:ring-orange-500"
+            />
+            <span className={`${task.completed ? 'line-through text-gray-500' : 'text-gray-800'}`}>
+              {task.title}
+            </span>
           </li>
         ))}
       </ul>
