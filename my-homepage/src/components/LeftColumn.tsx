@@ -25,12 +25,12 @@ const LeftColumn: React.FC<LeftColumnProps> = ({ isOpen, toggleSidebar }) => {
     if (!isOpen) {
       toggleSidebar(); // Open the sidebar
     }
-    
+
     // Set active section
     setActiveSection(activeSection === section ? null : section);
   };
 
-  // Render section items only if the section is active
+  // Function to render section items only if the section is active
   const renderSectionItems = (items: string[], section: string) => {
     if (activeSection !== section) return null;
 
@@ -43,8 +43,14 @@ const LeftColumn: React.FC<LeftColumnProps> = ({ isOpen, toggleSidebar }) => {
               className="flex items-center justify-between bg-gray-800 p-2 rounded-md hover:bg-gray-700 transition-all"
             >
               <div className="flex items-center space-x-2">
-                {['peopleYouMayKnow', 'followers', 'following'].includes(section) ? (
-                  <div className="h-8 w-8 rounded-full bg-gray-500" /> // Circular placeholder for people
+                {['followers', 'following'].includes(section) ? (
+                  <img 
+                    src={index % 2 === 0 
+                      ? "https://jam-aveyron.fr/wp-content/uploads/2017/05/speaker-1.jpg" 
+                      : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFcy6TQ0A0NQQU92aym106SswQ6T4-WeJ5eoT7ufp8nuMfHo2dc954qkLnNXLx88VWwKA&usqp=CAU"} 
+                    alt="Profile" 
+                    className="h-8 w-8 rounded-full" 
+                  />
                 ) : (
                   section === 'projects' ? <FaFolderOpen className="text-lg text-indigo-400" /> : // Folder icon for Projects
                   section === 'events' ? <FaRegCalendarAlt className="text-lg text-indigo-400" /> : // Calendar icon for Events
@@ -77,7 +83,7 @@ const LeftColumn: React.FC<LeftColumnProps> = ({ isOpen, toggleSidebar }) => {
       <div className="space-y-4">
         {/* Upcoming Events */}
         <div onClick={() => handleSectionClick('events')} className="flex items-center space-x-4 group cursor-pointer">
-          <FaRegCalendarAlt className="text-2xl group-hover:text-indigo-400 transition-all" /> {/* Updated icon */}
+          <FaRegCalendarAlt className="text-2xl group-hover:text-indigo-400 transition-all" />
           {isOpen && <span className="group-hover:text-indigo-400 transition-all">Events</span>}
           {isOpen && <FaPlus className="text-sm text-gray-300 hover:text-white ml-auto cursor-pointer" />}
         </div>
@@ -85,7 +91,7 @@ const LeftColumn: React.FC<LeftColumnProps> = ({ isOpen, toggleSidebar }) => {
 
         {/* Contacts */}
         <div onClick={() => handleSectionClick('contacts')} className="flex items-center space-x-4 group cursor-pointer">
-          <FaRegUser className="text-2xl group-hover:text-indigo-400 transition-all" /> {/* Updated icon */}
+          <FaRegUser className="text-2xl group-hover:text-indigo-400 transition-all" />
           {isOpen && <span className="group-hover:text-indigo-400 transition-all">Contacts</span>}
           {isOpen && <FaPlus className="text-sm text-gray-300 hover:text-white ml-auto cursor-pointer" />}
         </div>
@@ -93,7 +99,7 @@ const LeftColumn: React.FC<LeftColumnProps> = ({ isOpen, toggleSidebar }) => {
 
         {/* Projects */}
         <div onClick={() => handleSectionClick('projects')} className="flex items-center space-x-4 group cursor-pointer">
-          <FaFolderOpen className="text-2xl group-hover:text-indigo-400 transition-all" /> {/* Updated icon */}
+          <FaFolderOpen className="text-2xl group-hover:text-indigo-400 transition-all" />
           {isOpen && <span className="group-hover:text-indigo-400 transition-all">Projects</span>}
           {isOpen && <FaPlus className="text-sm text-gray-300 hover:text-white ml-auto cursor-pointer" />}
         </div>
@@ -101,7 +107,7 @@ const LeftColumn: React.FC<LeftColumnProps> = ({ isOpen, toggleSidebar }) => {
 
         {/* Albums */}
         <Link to="/albums-shortcuts" className="flex items-center space-x-4 group cursor-pointer">
-          <FaRegImage className="text-2xl group-hover:text-indigo-400 transition-all" /> {/* Albums Icon */}
+          <FaRegImage className="text-2xl group-hover:text-indigo-400 transition-all" />
           {isOpen && <span className="group-hover:text-indigo-400 transition-all">Albums</span>}
         </Link>
 
