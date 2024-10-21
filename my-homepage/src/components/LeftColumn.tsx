@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { FaAngleDoubleLeft, FaAngleDoubleRight, FaPlus, FaCog, FaFolderOpen, FaRegCalendarAlt, FaRegUser, FaRegImage } from 'react-icons/fa'; // Added more icons
-import { AiOutlineContacts, AiOutlineTeam } from 'react-icons/ai'; // Keeping the relevant icons
+import { FaAngleDoubleLeft, FaAngleDoubleRight, FaPlus, FaCog, FaFolderOpen, FaRegCalendarAlt, FaRegUser, FaRegImage } from 'react-icons/fa';
+import { AiOutlineContacts, AiOutlineTeam } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
 interface LeftColumnProps {
@@ -15,33 +15,24 @@ const LeftColumn: React.FC<LeftColumnProps> = ({ isOpen, toggleSidebar }) => {
   const events = ['Event 1', 'Event 2'];
   const contacts = ['John Doe', 'Jane Smith'];
   const organizations = ['Organization 1', 'Organization 2'];
-  const peopleYouMayKnow = ['Person 1', 'Person 2'];
   const followers = ['Follower 1', 'Follower 2'];
   const following = ['Following 1', 'Following 2'];
 
-  // Function to toggle the active section
   const handleSectionClick = (section: string) => {
-    // Expand sidebar if it's closed
     if (!isOpen) {
       toggleSidebar(); // Open the sidebar
     }
-
-    // Set active section
     setActiveSection(activeSection === section ? null : section);
   };
 
-  // Function to render section items only if the section is active
   const renderSectionItems = (items: string[], section: string) => {
     if (activeSection !== section) return null;
 
     return (
       <>
         <ul className="mt-2 space-y-2">
-          {items.slice(0, 2).map((item, index) => (
-            <li
-              key={index}
-              className="flex items-center justify-between bg-gray-800 p-2 rounded-md hover:bg-gray-700 transition-all"
-            >
+          {items.map((item, index) => (
+            <li key={index} className="flex items-center justify-between bg-gray-800 p-2 rounded-md transition-all hover:bg-orange-700">
               <div className="flex items-center space-x-2">
                 {['followers', 'following'].includes(section) ? (
                   <img 
@@ -52,21 +43,20 @@ const LeftColumn: React.FC<LeftColumnProps> = ({ isOpen, toggleSidebar }) => {
                     className="h-8 w-8 rounded-full" 
                   />
                 ) : (
-                  section === 'projects' ? <FaFolderOpen className="text-lg text-indigo-400" /> : // Folder icon for Projects
-                  section === 'events' ? <FaRegCalendarAlt className="text-lg text-indigo-400" /> : // Calendar icon for Events
-                  section === 'contacts' ? <FaRegUser className="text-lg text-indigo-400" /> :  // User icon for Contacts
-                  section === 'albums' ? <FaRegImage className="text-lg text-indigo-400" /> : // Image icon for Albums
-                  <AiOutlineTeam className="text-lg text-indigo-400" /> // Team icon for others
+                  section === 'projects' ? <FaFolderOpen className="text-lg text-orange-400" /> :
+                  section === 'events' ? <FaRegCalendarAlt className="text-lg text-orange-400" /> :
+                  section === 'contacts' ? <FaRegUser className="text-lg text-orange-400" /> :
+                  <AiOutlineTeam className="text-lg text-orange-400" />
                 )}
-                <span>{item}</span>
+                <span className="text-white">{item}</span>
               </div>
-              {section !== 'peopleYouMayKnow' && section !== 'followers' && section !== 'following' && (
+              {section !== 'followers' && section !== 'following' && (
                 <FaCog className="text-gray-400 hover:text-white transition-colors" />
               )}
             </li>
           ))}
         </ul>
-        <Link to={`/${section}-shortcuts`} className="text-indigo-400 hover:underline mt-4 block">
+        <Link to={`/${section}-shortcuts`} className="text-orange-300 hover:underline mt-4 block">
           See All
         </Link>
       </>
@@ -74,62 +64,56 @@ const LeftColumn: React.FC<LeftColumnProps> = ({ isOpen, toggleSidebar }) => {
   };
 
   return (
-    <div className={`bg-gray-900 text-white h-screen p-4 transition-all duration-300 ${isOpen ? 'w-64' : 'w-16'}`}>
+    <div className={`bg-gray-900 text-white h-screen p-4 transition-all duration-300 ${isOpen ? 'w-64' : 'w-16'} shadow-lg`}>
       {/* Sidebar Toggle Button */}
-      <button onClick={toggleSidebar} className="text-xl mb-6 focus:outline-none hover:text-indigo-400 transition-colors">
+      <button onClick={toggleSidebar} className="text-xl mb-6 focus:outline-none hover:text-orange-400 transition-colors">
         {isOpen ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}
       </button>
 
       <div className="space-y-4">
         {/* Upcoming Events */}
         <div onClick={() => handleSectionClick('events')} className="flex items-center space-x-4 group cursor-pointer">
-          <FaRegCalendarAlt className="text-2xl group-hover:text-indigo-400 transition-all" />
-          {isOpen && <span className="group-hover:text-indigo-400 transition-all">Events</span>}
+          <FaRegCalendarAlt className="text-2xl group-hover:text-orange-400 transition-all" />
+          {isOpen && <span className="group-hover:text-orange-400 transition-all">Events</span>}
           {isOpen && <FaPlus className="text-sm text-gray-300 hover:text-white ml-auto cursor-pointer" />}
         </div>
         {renderSectionItems(events, 'events')}
 
         {/* Contacts */}
         <div onClick={() => handleSectionClick('contacts')} className="flex items-center space-x-4 group cursor-pointer">
-          <FaRegUser className="text-2xl group-hover:text-indigo-400 transition-all" />
-          {isOpen && <span className="group-hover:text-indigo-400 transition-all">Contacts</span>}
+          <FaRegUser className="text-2xl group-hover:text-orange-400 transition-all" />
+          {isOpen && <span className="group-hover:text-orange-400 transition-all">Contacts</span>}
           {isOpen && <FaPlus className="text-sm text-gray-300 hover:text-white ml-auto cursor-pointer" />}
         </div>
         {renderSectionItems(contacts, 'contacts')}
 
         {/* Projects */}
         <div onClick={() => handleSectionClick('projects')} className="flex items-center space-x-4 group cursor-pointer">
-          <FaFolderOpen className="text-2xl group-hover:text-indigo-400 transition-all" />
-          {isOpen && <span className="group-hover:text-indigo-400 transition-all">Projects</span>}
+          <FaFolderOpen className="text-2xl group-hover:text-orange-400 transition-all" />
+          {isOpen && <span className="group-hover:text-orange-400 transition-all">Projects</span>}
           {isOpen && <FaPlus className="text-sm text-gray-300 hover:text-white ml-auto cursor-pointer" />}
         </div>
         {renderSectionItems(projects, 'projects')}
 
-        {/* Albums */}
-        <Link to="/albums-shortcuts" className="flex items-center space-x-4 group cursor-pointer">
-          <FaRegImage className="text-2xl group-hover:text-indigo-400 transition-all" />
-          {isOpen && <span className="group-hover:text-indigo-400 transition-all">Albums</span>}
-        </Link>
-
         {/* Organizations */}
         <div onClick={() => handleSectionClick('organizations')} className="flex items-center space-x-4 group cursor-pointer">
-          <AiOutlineTeam className="text-2xl group-hover:text-indigo-400 transition-all" />
-          {isOpen && <span className="group-hover:text-indigo-400 transition-all">Organizations</span>}
+          <AiOutlineTeam className="text-2xl group-hover:text-orange-400 transition-all" />
+          {isOpen && <span className="group-hover:text-orange-400 transition-all">Organizations</span>}
           {isOpen && <FaPlus className="text-sm text-gray-300 hover:text-white ml-auto cursor-pointer" />}
         </div>
         {renderSectionItems(organizations, 'organizations')}
 
         {/* Followers */}
         <div onClick={() => handleSectionClick('followers')} className="flex items-center space-x-4 group cursor-pointer">
-          <AiOutlineTeam className="text-2xl group-hover:text-indigo-400 transition-all" />
-          {isOpen && <span className="group-hover:text-indigo-400 transition-all">Followers</span>}
+          <AiOutlineTeam className="text-2xl group-hover:text-orange-400 transition-all" />
+          {isOpen && <span className="group-hover:text-orange-400 transition-all">Followers</span>}
         </div>
         {renderSectionItems(followers, 'followers')}
 
         {/* Following */}
         <div onClick={() => handleSectionClick('following')} className="flex items-center space-x-4 group cursor-pointer">
-          <AiOutlineTeam className="text-2xl group-hover:text-indigo-400 transition-all" />
-          {isOpen && <span className="group-hover:text-indigo-400 transition-all">Following</span>}
+          <AiOutlineTeam className="text-2xl group-hover:text-orange-400 transition-all" />
+          {isOpen && <span className="group-hover:text-orange-400 transition-all">Following</span>}
         </div>
         {renderSectionItems(following, 'following')}
       </div>
