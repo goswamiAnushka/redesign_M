@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaCog } from 'react-icons/fa';
-import { AiFillFolder } from 'react-icons/ai';
-import Navbar from './Navbar'; // Import the Navbar component
+import { AiFillFolder, AiOutlinePlus } from 'react-icons/ai';
+import Navbar from './Navbar';
 
 const ProjectShortcuts: React.FC = () => {
   const projects = [
@@ -12,15 +12,21 @@ const ProjectShortcuts: React.FC = () => {
   ];
 
   return (
-    <div className="bg-gray-100 min-h-screen">
-      <Navbar /> {/* Include Navbar */}
-      <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow mt-8 max-w-5xl mx-auto">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6">Projects</h2>
+    <div className="bg-white min-h-screen">
+      <Navbar />
+      <div className="max-w-5xl mx-auto p-6">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-3xl font-bold text-orange-900">Projects</h2>
+          <button className="bg-orange-600 text-white rounded-lg px-4 py-2 flex items-center shadow-md hover:bg-orange-700 transition duration-300">
+            <AiOutlinePlus className="mr-2" />
+            Add Project
+          </button>
+        </div>
         <ul className="space-y-4">
           {projects.map((project, index) => (
-            <li key={index} className="flex items-center justify-between p-4 bg-blue-100 rounded-md shadow-sm hover:bg-blue-200 transition-all">
+            <li key={index} className="flex items-center justify-between p-4 bg-white rounded-md shadow-md hover:bg-orange-50 border border-orange-300 transition-all">
               <div className="flex items-center space-x-3">
-                <AiFillFolder className="text-lg text-blue-500" />
+                <AiFillFolder className="text-lg text-orange-500" />
                 <p className="text-lg font-semibold text-gray-800">{project.name}</p>
                 <span className={`text-xs font-medium px-2 py-1 rounded-full ${
                   project.status === 'In Progress' ? 'bg-yellow-300 text-yellow-800' : 
@@ -30,7 +36,7 @@ const ProjectShortcuts: React.FC = () => {
                   {project.status}
                 </span>
               </div>
-              <FaCog className="text-gray-500 hover:text-gray-700 cursor-pointer transition-colors" />
+              <FaCog className="text-orange-500 hover:text-orange-700 cursor-pointer transition-colors" />
             </li>
           ))}
         </ul>
