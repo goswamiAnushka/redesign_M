@@ -21,6 +21,12 @@ const LeftColumn: React.FC<LeftColumnProps> = ({ isOpen, toggleSidebar }) => {
 
   // Function to toggle the active section
   const handleSectionClick = (section: string) => {
+    // Expand sidebar if it's closed
+    if (!isOpen) {
+      toggleSidebar(); // Open the sidebar
+    }
+    
+    // Set active section
     setActiveSection(activeSection === section ? null : section);
   };
 
@@ -106,7 +112,6 @@ const LeftColumn: React.FC<LeftColumnProps> = ({ isOpen, toggleSidebar }) => {
           {isOpen && <FaPlus className="text-sm text-gray-300 hover:text-white ml-auto cursor-pointer" />}
         </div>
         {renderSectionItems(organizations, 'organizations')}
-
 
         {/* Followers */}
         <div onClick={() => handleSectionClick('followers')} className="flex items-center space-x-4 group cursor-pointer">
