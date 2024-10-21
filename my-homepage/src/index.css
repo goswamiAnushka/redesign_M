@@ -1,5 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom global styles */
 body {
-  margin: 0;
+  @apply m-0 font-sans antialiased; /* Tailwind utility for margin 0 and font styling */
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -8,6 +13,7 @@ body {
 }
 
 code {
+  @apply font-mono; /* Tailwind utility for monospaced fonts */
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
