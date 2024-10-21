@@ -3,7 +3,9 @@ import Newsfeed from './Newsfeed';
 import TimelineFilters from './TimelineFilters';
 // @ts-ignore
 import EmojiPicker from 'emoji-picker-react';
-import { FiPaperclip } from 'react-icons/fi'; // File attachment icon
+import { FiPaperclip, FiCalendar, FiRefreshCw } from 'react-icons/fi';
+import { FaChartLine, FaClipboardList, FaUserCheck, FaClipboardCheck } from 'react-icons/fa';
+import { BsFillPersonCheckFill } from 'react-icons/bs'; // Added for tagging contacts
 
 const prohibitedWords = ['badword1', 'badword2', 'offensive'];
 
@@ -15,7 +17,7 @@ interface FilterOptions {
   contacts: boolean;
   outcomes: boolean;
   progressTracker: boolean;
-  dateHappened: string; // This can hold values like 'today', 'previousDay', etc.
+  dateHappened: string;
 }
 
 const MiddleColumn: React.FC = () => {
@@ -23,7 +25,7 @@ const MiddleColumn: React.FC = () => {
   const [error, setError] = useState('');
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [showFilters, setShowFilters] = useState(false); // State to manage filter dropdown
+  const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState<FilterOptions>({
     organizations: false,
     projects: false,
@@ -32,8 +34,19 @@ const MiddleColumn: React.FC = () => {
     contacts: false,
     outcomes: false,
     progressTracker: false,
-    dateHappened: '', // No date filter selected initially
+    dateHappened: '',
   });
+  const [selectedLocation, setSelectedLocation] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
+  const [contactsToTag, setContactsToTag] = useState<string[]>([]);
+  const [activeTab, setActiveTab] = useState('Progress');
+  const [progressTracker, setProgressTracker] = useState<{ [contact: string]: string }>({});
+  const [activityTrackers, setActivityTrackers] = useState<{ [tracker: string]: number }>({});
+  const [interactionTrackers, setInteractionTrackers] = useState<{ [contact: string]: boolean }>({});
+  const [impactTrackers, setImpactTrackers] = useState<{ [tracker: string]: string }>({});
+  const [savedPosts, setSavedPosts] = useState<any[]>([]); // Store posts for the newsfeed
+
+  const contacts = ['Contact 1', 'Contact 2', 'Contact 3'];
 
   const handlePostChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -55,19 +68,16 @@ const MiddleColumn: React.FC = () => {
   const handlePostSubmit = () => {
     const trimmedText = postText.trim();
 
-    // Validate for empty posts or only spaces
     if (!trimmedText && !selectedFile) {
       setError('Post cannot be empty. Add text or attach a file.');
       return;
     }
 
-    // Validate for short length
     if (trimmedText && trimmedText.length < 5) {
       setError('Post must be at least 5 characters long.');
       return;
     }
 
-    // Validate for prohibited words
     const containsProhibited = prohibitedWords.some((word) =>
       trimmedText.toLowerCase().includes(word)
     );
@@ -76,10 +86,31 @@ const MiddleColumn: React.FC = () => {
       return;
     }
 
-    // If everything is valid
-    console.log('Posted:', { postText, file: selectedFile });
+    // Save post to newsfeed
+    const newPost = {
+      postText,
+      file: selectedFile,
+      location: selectedLocation,
+      date: selectedDate,
+      taggedContacts: contactsToTag,
+      progressTracker,
+      activityTrackers,
+      interactionTrackers,
+      impactTrackers,
+    };
+    setSavedPosts((prev) => [...prev, newPost]);
+    console.log('Posted:', newPost);
+
+    // Reset state
     setPostText('');
     setSelectedFile(null);
+    setSelectedLocation('');
+    setSelectedDate('');
+    setContactsToTag([]);
+    setProgressTracker({});
+    setActivityTrackers({});
+    setInteractionTrackers({});
+    setImpactTrackers({});
     setError('');
   };
 
@@ -93,86 +124,269 @@ const MiddleColumn: React.FC = () => {
       ...prevFilters,
       ...newFilters,
     }));
-    // Logic to filter newsfeed here based on `newFilters`
     console.log('Filters applied:', { ...filters, ...newFilters });
   };
 
-  return (
-    <div className="p-6 bg-white shadow-lg rounded-md max-w-2xl mx-auto"> {/* Increased padding */}
-      {/* Post Update Section */}
-      <div className="mb-8"> {/* Increased bottom margin */}
-        <h2 className="font-semibold text-xl mb-3 text-gray-800">Share an Update</h2>
-        <div className="relative">
-        <textarea
-  className="w-full border border-gray-300 rounded-lg p-4 h-24 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm" // Increased height and padding
-  placeholder="Share your progress"
-  maxLength={250}
-  value={postText}
-  onChange={handlePostChange}
-/>
+  const handleRefresh = () => {
+    console.log('Refreshing updates...');
+    // You can add any additional logic for refreshing here
+  };
 
-          
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab);
+    // Reset error when changing tabs
+    setError('');
+  };
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'Progress':
+        return (
+          <div>
+            <h3 className="font-semibold mb-2">Progress Tracker</h3>
+            {contactsToTag.map((contact) => (
+              <div key={contact} className="flex items-center space-x-2 mb-2">
+                <label>{contact}:</label>
+                <input
+                  type="text"
+                  className="bg-gray-700 text-white rounded-lg p-2"
+                  value={progressTracker[contact] || ''}
+                  onChange={(e) =>
+                    setProgressTracker((prev) => ({ ...prev, [contact]: e.target.value }))
+                  }
+                />
+              </div>
+            ))}
+          </div>
+        );
+      case 'Activity':
+        return (
+          <div>
+            <h3 className="font-semibold mb-2">Activity Tracker</h3>
+            {['Tracker 1', 'Tracker 2'].map((tracker) => (
+              <div key={tracker} className="flex items-center space-x-2 mb-2">
+                <label>{tracker}:</label>
+                <input
+                  type="number"
+                  className="bg-gray-700 text-white rounded-lg p-2"
+                  value={activityTrackers[tracker] || 0}
+                  onChange={(e) =>
+                    setActivityTrackers((prev) => ({ ...prev, [tracker]: +e.target.value }))
+                  }
+                />
+              </div>
+            ))}
+          </div>
+        );
+      case 'Interactions':
+        return (
+          <div>
+            <h3 className="font-semibold mb-2">Attendance/Interactions Tracker</h3>
+            {contactsToTag.map((contact) => (
+              <div key={contact} className="flex items-center space-x-2 mb-2">
+                <label>{contact}:</label>
+                <input
+                  type="checkbox"
+                  className="bg-gray-700 text-white rounded-lg"
+                  checked={interactionTrackers[contact] || false}
+                  onChange={(e) =>
+                    setInteractionTrackers((prev) => ({
+                      ...prev,
+                      [contact]: e.target.checked,
+                    }))
+                  }
+                />
+              </div>
+            ))}
+          </div>
+        );
+      case 'Impact':
+        return (
+          <div>
+            <h3 className="font-semibold mb-2">Impact Tracker</h3>
+            {['Achievement', 'Satisfaction'].map((tracker) => (
+              <div key={tracker} className="flex items-center space-x-2 mb-2">
+                <label>{tracker}:</label>
+                <select
+                  className="bg-gray-700 text-white rounded-lg p-2"
+                  value={impactTrackers[tracker] || ''}
+                  onChange={(e) =>
+                    setImpactTrackers((prev) => ({ ...prev, [tracker]: e.target.value }))
+                  }
+                >
+                  <option value="">Select</option>
+                  <option value="Achieved">Achieved</option>
+                  <option value="Not Achieved">Not Achieved</option>
+                  <option value="In Progress">In Progress</option>
+                </select>
+              </div>
+            ))}
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="p-8 bg-gradient-to-br from-orange-300 to-orange-600 text-white shadow-xl rounded-lg max-w-3xl mx-auto space-y-6">
+      {/* Post Update Section */}
+      <div className="mb-10">
+        <h2 className="font-bold text-2xl mb-4">Share an Update</h2>
+        <div className="relative">
+          <textarea
+            className="w-full border border-gray-500 rounded-lg p-4 h-32 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all duration-200 shadow-md"
+            placeholder="Start typing in the Timeline Update..."
+            maxLength={250}
+            value={postText}
+            onChange={handlePostChange}
+          />
           <button
-            className="absolute right-3 top-3 text-2xl text-gray-500"
+            className="absolute right-3 top-3 text-2xl hover:text-yellow-400 transition-colors duration-200"
             onClick={() => setShowEmojiPicker((prev) => !prev)}
           >
             😊
           </button>
           {showEmojiPicker && (
-            <div className="absolute bottom-[-350px] left-0 z-10 shadow-lg bg-white rounded-lg">
+            <div className="absolute bottom-12 left-0 z-10">
               <EmojiPicker onEmojiClick={handleEmojiClick} />
             </div>
           )}
         </div>
-
-        {/* Attach File */}
-        <div className="mt-4 flex items-center space-x-4"> {/* Increased space between items */}
-          <label className="cursor-pointer flex items-center space-x-2 text-blue-500 hover:text-blue-600">
-            <FiPaperclip className="text-xl" />
-            <span>Attach File</span>
+        {error && <p className="text-red-500">{error}</p>}
+        <div className="flex space-x-4 mt-4">
+          <label className="flex items-center">
             <input
               type="file"
               className="hidden"
               onChange={handleFileChange}
             />
-          </label>
-          {selectedFile && (
-            <span className="text-gray-700 text-sm">
-              Attached: {selectedFile.name}
+            <span className="bg-gray-700 p-2 rounded-lg cursor-pointer flex items-center">
+              <FiPaperclip className="mr-2" />
+              Attach File
             </span>
-          )}
-        </div>
-
-        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-
-        <button
-  className="mt-5 bg-blue-500 text-white rounded-full py-2 px-6 text-sm shadow-md"
-  onClick={handlePostSubmit}
->
-  Post
-</button>
-
-      </div>
-
-      {/* Filters Section */}
-      <div className="mb-6"> {/* Increased bottom margin */}
-        <button
-          className="text-blue-600 font-semibold"
-          onClick={() => setShowFilters((prev) => !prev)}
-        >
-          {showFilters ? 'Hide Filters' : 'Show Filters'}
-        </button>
-        {showFilters && (
-          <div className="mt-2 bg-white shadow rounded p-4">
-            <TimelineFilters onFilterChange={handleFilterChange} />
+          </label>
+          <div className="flex items-center">
+            <FiCalendar className="mr-2" />
+            <input
+              type="date"
+              className="bg-gray-700 text-white rounded-lg p-2"
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+            />
           </div>
-        )}
+          <div className="flex items-center">
+            <input
+              type="text"
+              className="bg-gray-700 text-white rounded-lg p-2"
+              placeholder="Location"
+              value={selectedLocation}
+              onChange={(e) => setSelectedLocation(e.target.value)}
+            />
+          </div>
+          <button
+            className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200"
+            onClick={handlePostSubmit}
+          >
+            Post Update
+          </button>
+        </div>
       </div>
 
-      {/* Newsfeed */}
-      <div className="mt-6">
-        <Newsfeed filters={filters} />
+      {/* Tags Section */}
+      <div className="flex flex-col mt-4">
+        <h3 className="font-semibold mb-2">Tag Contacts:</h3>
+        <select
+          className="bg-gray-700 text-white rounded-lg p-2 mb-2"
+          onChange={(e) => {
+            const value = e.target.value;
+            if (value) {
+              setContactsToTag((prev) => [...prev, value]);
+              e.target.value = ''; // Reset the select input
+            }
+          }}
+        >
+          <option value="">Select a contact</option>
+          {contacts.map((contact) => (
+            <option key={contact} value={contact}>{contact}</option>
+          ))}
+        </select>
+        <div className="mt-2">
+          <p className="text-sm">Tagged Contacts: {contactsToTag.join(', ')}</p>
+        </div>
       </div>
+
+      {/* Tabs Section */}
+      <div className="flex justify-around mt-4">
+        <div className="flex items-center">
+          <FaClipboardCheck className="mr-2" />
+          <button
+            className={`px-4 py-2 rounded-lg ${activeTab === 'Progress' ? 'bg-green-500' : 'bg-gray-600 hover:bg-gray-500'}`}
+            onClick={() => handleTabChange('Progress')}
+          >
+            Progress
+          </button>
+        </div>
+        <div className="flex items-center">
+          <FaClipboardList className="mr-2" />
+          <button
+            className={`px-4 py-2 rounded-lg ${activeTab === 'Activity' ? 'bg-green-500' : 'bg-gray-600 hover:bg-gray-500'}`}
+            onClick={() => handleTabChange('Activity')}
+          >
+            Activity
+          </button>
+        </div>
+        <div className="flex items-center">
+          <FaUserCheck className="mr-2" />
+          <button
+            className={`px-4 py-2 rounded-lg ${activeTab === 'Interactions' ? 'bg-green-500' : 'bg-gray-600 hover:bg-gray-500'}`}
+            onClick={() => handleTabChange('Interactions')}
+          >
+            Interactions
+          </button>
+        </div>
+        <div className="flex items-center">
+          <FaChartLine className="mr-2" />
+          <button
+            className={`px-4 py-2 rounded-lg ${activeTab === 'Impact' ? 'bg-green-500' : 'bg-gray-600 hover:bg-gray-500'}`}
+            onClick={() => handleTabChange('Impact')}
+          >
+            Impact
+          </button>
+        </div>
+      </div>
+
+      {/* Render Active Tab Content */}
+      <div className="mt-6">{renderTabContent()}</div>
+
+      {/* Filter Section */}
+      <div className="flex justify-between items-center mt-6">
+        <button
+          className="flex items-center bg-orange-600 text-white p-2 rounded-lg hover:bg-orange-700 transition-colors duration-200"
+          onClick={() => setShowFilters(!showFilters)}
+        >
+          <FiRefreshCw className="mr-2" />
+          Filters
+        </button>
+        <div className="text-sm">
+          <span className="text-yellow-300">Refresh to See Updates:</span>
+          <button
+            className="ml-2 bg-green-600 text-white p-2 rounded-lg hover:bg-green-700 transition-colors duration-200"
+            onClick={handleRefresh}
+          >
+            Refresh
+          </button>
+        </div>
+      </div>
+      {showFilters && (
+        <TimelineFilters
+          filters={filters}
+          onChange={handleFilterChange}
+        />
+      )}
+
+      {/* Newsfeed Section */}
+      <Newsfeed posts={savedPosts} />
     </div>
   );
 };
