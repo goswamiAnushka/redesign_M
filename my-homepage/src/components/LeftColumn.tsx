@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
-import { FaAngleDoubleLeft, FaAngleDoubleRight, FaPlus, FaCog, FaFolderOpen, FaRegCalendarAlt, FaRegUser, FaRegImage } from 'react-icons/fa';
+import {
+  FaAngleDoubleLeft,
+  FaAngleDoubleRight,
+  FaPlus,
+  FaCog,
+  FaFolderOpen,
+  FaRegCalendarAlt,
+  FaRegUser,
+  FaRegImage,
+} from 'react-icons/fa';
 import { AiOutlineTeam } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
@@ -20,14 +29,14 @@ const LeftColumn: React.FC<LeftColumnProps> = ({ isOpen, toggleSidebar }) => {
     { name: 'Follower 1', image: 'https://profesordefisica.org/wp-content/uploads/2024/04/profesor-de-fisica-en-La-Molina.png' },
     { name: 'Follower 2', image: 'https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/788.png' },
     { name: 'Follower 3', image: 'https://randomuser.me/api/portraits/men/1.jpg' },
-    { name: 'Follower 4', image: 'https://randomuser.me/api/portraits/women/2.jpg' }
+    { name: 'Follower 4', image: 'https://randomuser.me/api/portraits/women/2.jpg' },
   ];
 
   const following = [
     { name: 'Following 1', image: 'https://randomuser.me/api/portraits/men/3.jpg' },
     { name: 'Following 2', image: 'https://randomuser.me/api/portraits/women/4.jpg' },
     { name: 'Following 3', image: 'https://randomuser.me/api/portraits/men/5.jpg' },
-    { name: 'Following 4', image: 'https://randomuser.me/api/portraits/women/6.jpg' }
+    { name: 'Following 4', image: 'https://randomuser.me/api/portraits/women/6.jpg' },
   ];
 
   const handleSectionClick = (section: string) => {
@@ -41,28 +50,23 @@ const LeftColumn: React.FC<LeftColumnProps> = ({ isOpen, toggleSidebar }) => {
     if (activeSection !== section) return null;
 
     return (
-      <>
-        <ul className="mt-2 space-y-2">
-          {items.map((item, index) => (
-            <li key={index} className="flex items-center justify-between bg-gray-200 p-2 rounded-md transition-all hover:bg-red-400">
-              <div className="flex items-center space-x-2">
-                {section === 'projects' ? <FaFolderOpen className="text-lg text-red-500" /> :
-                  section === 'events' ? <FaRegCalendarAlt className="text-lg text-red-500" /> :
-                  section === 'contacts' ? <FaRegUser className="text-lg text-red-500" /> :
-                  <AiOutlineTeam className="text-lg text-red-500" />
-                }
-                <span className="text-gray-900">{item}</span>
-              </div>
-              {section !== 'followers' && section !== 'following' && (
-                <FaCog className="text-gray-400 hover:text-white transition-colors" />
-              )}
-            </li>
-          ))}
-        </ul>
-        <Link to={`/${section}-shortcuts`} className="text-red-500 hover:underline mt-4 block">
-          See All
-        </Link>
-      </>
+      <ul className="mt-2 space-y-2">
+        {items.map((item, index) => (
+          <li key={index} className="flex items-center justify-between bg-gray-200 p-2 rounded-md transition-all hover:bg-red-400">
+            <div className="flex items-center space-x-2">
+              {section === 'projects' ? <FaFolderOpen className="text-lg text-red-500" /> :
+                section === 'events' ? <FaRegCalendarAlt className="text-lg text-red-500" /> :
+                section === 'contacts' ? <FaRegUser className="text-lg text-red-500" /> :
+                <AiOutlineTeam className="text-lg text-red-500" />
+              }
+              <span className="text-gray-900">{item}</span>
+            </div>
+            {section !== 'followers' && section !== 'following' && (
+              <FaCog className="text-gray-400 hover:text-white transition-colors" />
+            )}
+          </li>
+        ))}
+      </ul>
     );
   };
 
@@ -70,23 +74,18 @@ const LeftColumn: React.FC<LeftColumnProps> = ({ isOpen, toggleSidebar }) => {
     if (activeSection !== section) return null;
 
     return (
-      <>
-        <ul className="mt-2 grid grid-cols-2 gap-4">
-          {profiles.map((profile, index) => (
-            <li key={index} className="flex flex-col items-center space-y-2">
-              <img
-                src={profile.image}
-                alt={profile.name}
-                className="w-12 h-12 rounded-full object-cover border-2 border-red-400"
-              />
-              <span className="text-sm text-gray-900">{profile.name}</span>
-            </li>
-          ))}
-        </ul>
-        <Link to={`/${section}-shortcuts`} className="text-red-500 hover:underline mt-4 block">
-          See All
-        </Link>
-      </>
+      <ul className="mt-2 grid grid-cols-2 gap-4">
+        {profiles.map((profile, index) => (
+          <li key={index} className="flex flex-col items-center space-y-2">
+            <img
+              src={profile.image}
+              alt={profile.name}
+              className="w-12 h-12 rounded-full object-cover border-2 border-red-400"
+            />
+            <span className="text-sm text-gray-900">{profile.name}</span>
+          </li>
+        ))}
+      </ul>
     );
   };
 
@@ -95,12 +94,11 @@ const LeftColumn: React.FC<LeftColumnProps> = ({ isOpen, toggleSidebar }) => {
       className={`bg-white text-gray-900 h-screen p-4 transition-all duration-300 ${
         isOpen ? 'w-64' : 'w-16'
       } shadow-lg`}
-      style={{ height: '100vh' }} // Ensure the sidebar height is 100% of the viewport height
     >
       {/* Sidebar Toggle Button */}
       <button
         onClick={toggleSidebar}
-        className="text-xl mb-6 focus:outline-none hover:text-[#cc3300] transition-colors" // Dark reddish-orange hover color
+        className="text-xl mb-6 focus:outline-none hover:text-[#cc3300] transition-colors"
       >
         {isOpen ? <FaAngleDoubleLeft /> : <FaAngleDoubleRight />}
       </button>
@@ -111,7 +109,7 @@ const LeftColumn: React.FC<LeftColumnProps> = ({ isOpen, toggleSidebar }) => {
           onClick={() => handleSectionClick('events')}
           className="flex items-center space-x-4 group cursor-pointer"
         >
-          <FaRegCalendarAlt className="text-2xl group-hover:text-[#cc3300] transition-all" /> {/* Dark reddish-orange hover */}
+          <FaRegCalendarAlt className="text-2xl group-hover:text-[#cc3300] transition-all" />
           {isOpen && (
             <span className="group-hover:text-[#cc3300] transition-all">Events</span>
           )}

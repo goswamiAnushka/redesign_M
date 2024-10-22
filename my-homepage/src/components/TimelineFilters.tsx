@@ -11,13 +11,13 @@ interface TimelineFiltersProps {
     progressTracker: boolean;
     dateHappened: string;
   };
-  onChange: (newFilters: Partial<TimelineFiltersProps['filters']>) => void;
+  onFilterChange: (newFilters: Partial<TimelineFiltersProps['filters']>) => void; // Change here
 }
 
-const TimelineFilters: React.FC<TimelineFiltersProps> = ({ filters, onChange }) => {
+const TimelineFilters: React.FC<TimelineFiltersProps> = ({ filters, onFilterChange }) => {
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
-    onChange({ [name]: checked });
+    onFilterChange({ [name]: checked }); // Update to use onFilterChange
   };
 
   return (
@@ -91,7 +91,7 @@ const TimelineFilters: React.FC<TimelineFiltersProps> = ({ filters, onChange }) 
           type="date"
           name="dateHappened"
           value={filters.dateHappened}
-          onChange={(e) => onChange({ dateHappened: e.target.value })}
+          onChange={(e) => onFilterChange({ dateHappened: e.target.value })}
         />
         Date Happened
       </label>

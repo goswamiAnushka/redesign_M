@@ -149,7 +149,7 @@ const MiddleColumn: React.FC = () => {
                 <label>{contact}:</label>
                 <input
                   type="text"
-                  className="bg-gray-700 text-white rounded-lg p-2"
+                  className="bg-white text-darkOrange border border-darkOrange rounded-lg p-2 shadow-lg transition-shadow duration-200 hover:shadow-xl"
                   value={progressTracker[contact] || ''}
                   onChange={(e) =>
                     setProgressTracker((prev) => ({ ...prev, [contact]: e.target.value }))
@@ -168,7 +168,7 @@ const MiddleColumn: React.FC = () => {
                 <label>{tracker}:</label>
                 <input
                   type="number"
-                  className="bg-gray-700 text-white rounded-lg p-2"
+                  className="bg-white text-darkOrange border border-darkOrange rounded-lg p-2 shadow-lg transition-shadow duration-200 hover:shadow-xl"
                   value={activityTrackers[tracker] || 0}
                   onChange={(e) =>
                     setActivityTrackers((prev) => ({ ...prev, [tracker]: +e.target.value }))
@@ -187,7 +187,7 @@ const MiddleColumn: React.FC = () => {
                 <label>{contact}:</label>
                 <input
                   type="checkbox"
-                  className="bg-gray-700 text-white rounded-lg"
+                  className="bg-white text-darkOrange border border-darkOrange rounded-lg"
                   checked={interactionTrackers[contact] || false}
                   onChange={(e) =>
                     setInteractionTrackers((prev) => ({
@@ -208,7 +208,7 @@ const MiddleColumn: React.FC = () => {
               <div key={tracker} className="flex items-center space-x-2 mb-2">
                 <label>{tracker}:</label>
                 <select
-                  className="bg-gray-700 text-white rounded-lg p-2"
+                  className="bg-white text-darkOrange border border-darkOrange rounded-lg p-2 shadow-lg transition-shadow duration-200 hover:shadow-xl"
                   value={impactTrackers[tracker] || ''}
                   onChange={(e) =>
                     setImpactTrackers((prev) => ({ ...prev, [tracker]: e.target.value }))
@@ -227,15 +227,16 @@ const MiddleColumn: React.FC = () => {
         return null;
     }
   };
+  
 
   return (
-    <div className="p-8 bg-gradient-to-br from-orange-300 to-orange-600 text-white shadow-xl rounded-lg max-w-3xl mx-auto space-y-6">
+    <div className="p-6 space-y-6 bg-gray-100 overflow-hidden"> 
       {/* Post Update Section */}
       <div className="mb-10">
         <h2 className="font-bold text-2xl mb-4">Share an Update</h2>
         <div className="relative">
           <textarea
-            className="w-full border border-gray-500 rounded-lg p-4 h-32 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all duration-200 shadow-md"
+            className="w-full border border-gray-500 rounded-lg p-2 h-24 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all duration-200 shadow-md" // Reduced height and padding
             placeholder="Start typing in the Timeline Update..."
             maxLength={250}
             value={postText}
@@ -255,22 +256,19 @@ const MiddleColumn: React.FC = () => {
         </div>
         {error && <p className="text-red-500">{error}</p>}
         <div className="flex space-x-4 mt-4">
-          <label className="flex items-center">
-            <input
-              type="file"
-              className="hidden"
-              onChange={handleFileChange}
-            />
-            <span className="bg-gray-700 p-2 rounded-lg cursor-pointer flex items-center">
-              <FiPaperclip className="mr-2" />
-              Attach File
-            </span>
-          </label>
+        <label className="flex items-center">
+  <span className="bg-blue-400 text-white p-1 rounded-md cursor-pointer flex items-center hover:bg-blue-500">
+    <FiPaperclip className="mr-2" />
+    Attach File
+  </span>
+  <input type="file" className="hidden" onChange={handleFileChange} />
+</label>
           <div className="flex items-center">
             <FiCalendar className="mr-2" />
             <input
               type="date"
-              className="bg-gray-700 text-white rounded-lg p-2"
+              className="bg-orange-400 text-white rounded-md p-1.5 text-sm"
+
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
             />
@@ -278,14 +276,17 @@ const MiddleColumn: React.FC = () => {
           <div className="flex items-center">
             <input
               type="text"
-              className="bg-gray-700 text-white rounded-lg p-2"
+              className="bg-blue-600 text-black rounded-md p-1.5 text-sm hover:bg-green-500"
+
+
               placeholder="Location"
               value={selectedLocation}
               onChange={(e) => setSelectedLocation(e.target.value)}
             />
           </div>
           <button
-            className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200"
+           className="bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-600 transition-colors duration-200"
+
             onClick={handlePostSubmit}
           >
             Post Update
@@ -381,12 +382,12 @@ const MiddleColumn: React.FC = () => {
       {showFilters && (
         <TimelineFilters
           filters={filters}
-          onChange={handleFilterChange}
+          onFilterChange={handleFilterChange}
         />
       )}
 
       {/* Newsfeed Section */}
-      <Newsfeed posts={savedPosts} />
+      <Newsfeed posts={savedPosts} filters={filters} />
     </div>
   );
 };

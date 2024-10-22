@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FiPlus, FiSettings } from 'react-icons/fi';
+import { FiPlus } from 'react-icons/fi';
 
 // Dummy progress data
 const progressData = [
@@ -21,7 +21,6 @@ const RightColumn: React.FC = () => {
   const [showProgress, setShowProgress] = useState(false);
   const [taskInput, setTaskInput] = useState('');
   
-  // Pre-existing tasks
   const [tasks, setTasks] = useState<{ title: string; completed: boolean }[]>([
     { title: 'Review project plan', completed: false },
     { title: 'Finalize design mockups', completed: false },
@@ -50,21 +49,21 @@ const RightColumn: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 p-4 bg-white rounded-lg shadow-lg font-sans">
+    <div className="grid gap-6 p-6 bg-gradient-to-b from-gray-100 to-white rounded-lg shadow-lg font-sans">
       {/* Boards Section */}
-      <div className="bg-white p-4 rounded-lg shadow">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="font-bold text-xl">Boards</h2>
+      <div className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+        <div className="mb-4">
+          <h2 className="font-bold text-xl text-gray-800">Boards</h2>
           <button
             onClick={() => setIsPopupOpen(true)}
-            className="flex items-center p-1.5 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition"
+            className="flex items-center mt-2 p-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-transform transform hover:scale-105"
           >
             <FiPlus className="mr-1" /> New Board
           </button>
         </div>
-        <ul className="list-disc pl-5">
+        <ul className="list-disc pl-5 text-gray-600">
           {boardsData.map((board, index) => (
-            <li key={index} className="flex justify-between">
+            <li key={index} className="hover:text-blue-500 transition duration-300">
               {board.name} - <span className="text-gray-500">{board.tasks} tasks</span>
             </li>
           ))}
@@ -98,9 +97,9 @@ const RightColumn: React.FC = () => {
       )}
 
       {/* Personal Progress Tracker */}
-      <div className="bg-white p-4 rounded-lg shadow">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="font-bold text-lg">Personal Progress Tracker</h2>
+      <div className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+        <div className="mb-4">
+          <h2 className="font-bold text-lg text-gray-800">Personal Progress Tracker</h2>
           <button
             onClick={() => setShowProgress(!showProgress)}
             className="bg-blue-500 text-white text-sm rounded-lg px-2 py-1 hover:bg-blue-600 transition"
@@ -111,7 +110,7 @@ const RightColumn: React.FC = () => {
         {showProgress && (
           <>
             {progressData.map((item, index) => (
-              <div key={index} className="mb-4 flex items-center justify-between">
+              <div key={index} className="mb-4">
                 <span className="font-semibold mr-2">{item.label}:</span>
                 <div className="relative w-full bg-gray-200 rounded-full h-3 mx-2">
                   <div
@@ -122,7 +121,7 @@ const RightColumn: React.FC = () => {
                     }}
                   />
                 </div>
-                <span className="font-semibold">{item.progress}%</span>
+                <span className="font-semibold text-gray-700">{item.progress}%</span>
               </div>
             ))}
           </>
@@ -130,31 +129,34 @@ const RightColumn: React.FC = () => {
       </div>
 
       {/* Tasks Section */}
-      <div className="bg-white p-4 rounded-lg shadow">
-        <h2 className="font-bold text-lg mb-2">
+      <div className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+        <h2 className="font-bold text-lg mb-2 text-gray-800">
           Tasks: <span className="text-blue-600">{completedTasksCount}</span> out of <span className="text-blue-600">{tasks.length}</span>
         </h2>
-        <div className="flex items-center mb-4">
+        <div className="mb-4">
           <input
             type="text"
             value={taskInput}
             onChange={(e) => setTaskInput(e.target.value)}
             placeholder="Add a new task..."
-            className="border border-gray-300 rounded p-2 w-full"
+            className="border border-gray-300 rounded p-2 w-full mb-2"
           />
           <button
             onClick={handleAddTask}
-            className="ml-2 bg-orange-600 text-white rounded-lg p-1.5 hover:bg-orange-700 transition"
+            className="bg-orange-600 text-white rounded-lg p-1.5 hover:bg-orange-700 transition"
           >
             Add Task
           </button>
         </div>
         <button className="bg-gray-200 p-1 rounded-lg hover:bg-gray-300 text-sm">Filter</button>
         <div className="mt-4">
-          <h2 className="font-bold text-lg mb-2">To-Do List</h2>
-          <ul className="list-disc pl-5">
+          <h2 className="font-bold text-lg mb-2 text-gray-800">To-Do List</h2>
+          <ul className="list-disc pl-5 text-gray-600">
             {tasks.map((task, index) => (
-              <li key={index} className={`flex items-center ${task.completed ? 'line-through text-gray-500' : ''}`}>
+              <li
+                key={index}
+                className={`p-2 rounded-md transition-colors duration-200 ${task.completed ? 'line-through text-gray-500' : 'hover:bg-gray-100'}`}
+              >
                 <input
                   type="checkbox"
                   checked={task.completed}

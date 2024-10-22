@@ -13,15 +13,33 @@ interface NewsfeedProps {
     interactionTrackers: { [contact: string]: boolean };
     impactTrackers: { [tracker: string]: string };
   }>;
+  filters: {
+    organizations: boolean;
+    projects: boolean;
+    authors: boolean;
+    labels: boolean;
+    contacts: boolean;
+    outcomes: boolean;
+    progressTracker: boolean;
+    dateHappened: string;
+  }; // Added filters prop
 }
 
-const Newsfeed: React.FC<NewsfeedProps> = ({ posts }) => {
+const Newsfeed: React.FC<NewsfeedProps> = ({ posts, filters }) => {
+  // Filter the posts based on the applied filters
+  const filteredPosts = posts.filter((post) => {
+    if (filters.projects && !post.project) return false;
+    if (filters.contacts && post.taggedContacts.length === 0) return false;
+    // Add similar checks for other filters as needed...
+    return true; // If it passes all the filters
+  });
+
   return (
     <div className="mt-6">
       <h2 className="font-bold text-xl mb-4">Newsfeed</h2>
       <ul className="bg-gray-100 p-4 rounded-lg shadow">
-        {posts.length > 0 ? (
-          posts.map((post, index) => (
+        {filteredPosts.length > 0 ? (
+          filteredPosts.map((post, index) => (
             <li key={index} className="mb-4 border-b pb-2 last:border-0">
               <span className="block font-semibold text-blue-600">{post.postText}</span>
               <span className="block text-gray-400 text-sm">{post.date}</span>
