@@ -23,7 +23,7 @@ interface FilterOptions {
 }
 
 const MiddleColumn: React.FC = () => {
-  const [postText, setPostText] = useState('Share progress...');
+  const [postText, setPostText] = useState(''); // Set to empty string
   const [error, setError] = useState('');
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -245,12 +245,13 @@ const MiddleColumn: React.FC = () => {
     <div className="flex-grow p-4">
       <div className="mb-4">
         <div className="flex flex-wrap items-center space-x-2">
-          <textarea
-            value={postText}
-            onChange={handlePostChange}
-            placeholder=""
-            className="w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-blue-500 sm:max-w-xs lg:max-w-lg"
-          />
+        <textarea
+  value={postText}
+  onChange={handlePostChange}
+  placeholder="Share progress..." // This sets the placeholder, not the value
+  className="w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-blue-500 sm:max-w-xs lg:max-w-lg"
+/>
+
           <button
             onClick={() => setShowEmojiPicker(!showEmojiPicker)}
             className="px-3 py-2 bg-yellow-100 text-yellow-600 rounded-md shadow-sm"
@@ -289,18 +290,19 @@ const MiddleColumn: React.FC = () => {
               className="w-full mt-2 p-2 border border-green-300 rounded-md shadow-sm sm:max-w-xs lg:max-w-lg"
             />
           )}
-          <DatePicker
-            selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
-            placeholderText="Select date"
-            className="px-3 py-2 bg-red-100 text-red-600 rounded-md shadow-sm"
-          />
-          <button
-            onClick={handlePostSubmit}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm"
-          >
-            Post
-          </button>
+        <DatePicker
+  selected={selectedDate}
+  onChange={(date) => setSelectedDate(date)}
+  placeholderText="Select date"
+  className="px-3 py-2 bg-red-100 text-red-600 rounded-md shadow-sm"
+/>
+<button
+  onClick={handlePostSubmit}
+  className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm" // Added mt-2 here
+>
+  Post
+</button>
+
         </div>
         {error && <p className="text-red-500 mt-2">{error}</p>}
       </div>
