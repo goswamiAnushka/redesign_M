@@ -18,6 +18,7 @@ interface LeftColumnProps {
 }
 
 const LeftColumn: React.FC<LeftColumnProps> = ({ isOpen, toggleSidebar }) => {
+ 
   const [activeSection, setActiveSection] = useState<string | null>(null);
 
   const projects = ['Marketing Campaign', 'Product Launch'];
