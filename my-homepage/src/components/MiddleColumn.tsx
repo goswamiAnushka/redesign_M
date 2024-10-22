@@ -28,7 +28,7 @@ const MiddleColumn: React.FC = () => {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [showFilters, setShowFilters] = useState(false);
-  const [filters, setFilters] = useState<FilterOptions>({
+  const [filters, setFilters] = useState({
     organizations: false,
     projects: false,
     authors: false,
@@ -36,8 +36,11 @@ const MiddleColumn: React.FC = () => {
     contacts: false,
     outcomes: false,
     progressTracker: false,
+    surveys: false,
     dateHappened: '',
-  });
+    datePosted: ''
+});
+
   const [selectedLocation, setSelectedLocation] = useState('');
   const [selectedDate, setSelectedDate] = useState<Date | null>(null); // Use DatePicker
   const [contactsToTag, setContactsToTag] = useState<string[]>([]);
@@ -414,7 +417,9 @@ const MiddleColumn: React.FC = () => {
             <TimelineFilters filters={filters} onFilterChange={handleFilterChange} />
           </div>
         )}
-        <Newsfeed posts={savedPosts} filters={filters} />
+      <Newsfeed initialFilters={filters} />
+
+
       </div>
     </div>
   );
