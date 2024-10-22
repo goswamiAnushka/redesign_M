@@ -5,7 +5,7 @@ const Navbar: React.FC = () => {
   const [appsDropdown, setAppsDropdown] = useState(false);
 
   return (
-    <nav className="flex items-center justify-between bg-orange-600 shadow-lg p-3 text-sm"> {/* Bright orange-red */}
+    <nav className="flex items-center justify-between bg-orange-600 shadow-lg p-3 text-sm"> {/* Darker orange */}
       {/* Left Side: Logo and Navigation Tabs */}
       <div className="flex items-center space-x-4">
         <a href="/">
@@ -15,28 +15,28 @@ const Navbar: React.FC = () => {
             className="h-10 w-10 object-contain" 
           />
         </a>
-        <a href="/" className="text-white hover:text-yellow-300 font-semibold transition-all duration-200">
+        <a href="/" className="text-white hover:text-yellow-300 font-semibold transition duration-300 ease-in-out transform hover:scale-105">
           Home
         </a>
 
         {/* My Apps with Dropdown */}
         <div className="relative">
           <button 
-            className="flex items-center text-white hover:text-yellow-300 font-semibold transition-all duration-200"
+            className="flex items-center text-white hover:text-yellow-300 font-semibold transition duration-300 ease-in-out transform hover:scale-105"
             onClick={() => setAppsDropdown(!appsDropdown)}
           >
             My Apps <FaChevronDown className="ml-1" />
           </button>
           {appsDropdown && (
             <div className="absolute left-0 mt-2 w-40 bg-white shadow-md rounded-md py-2">
-              <a href="/app1" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">App 1</a>
-              <a href="/app2" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">App 2</a>
-              <a href="/app3" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">App 3</a>
+              <a href="/app1" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition duration-300">App 1</a>
+              <a href="/app2" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition duration-300">App 2</a>
+              <a href="/app3" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition duration-300">App 3</a>
             </div>
           )}
         </div>
 
-        <a href="/explore" className="text-white hover:text-yellow-300 font-semibold transition-all duration-200">
+        <a href="/explore" className="text-white hover:text-yellow-300 font-semibold transition duration-300 ease-in-out transform hover:scale-105">
           Explore
         </a>
       </div>
@@ -56,14 +56,14 @@ const Navbar: React.FC = () => {
       {/* Right Side: Notifications, Profile, and More Options */}
       <div className="flex items-center space-x-6">
         <div className="relative">
-          <button className="text-white hover:text-yellow-300 transition-all duration-200">
+          <button className="text-white hover:text-yellow-300 transition duration-300 ease-in-out">
             <FaBell className="text-lg" />
           </button>
           <span className="absolute -top-2 -right-2 bg-yellow-400 text-black text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">5</span>
         </div>
 
         <div className="relative">
-          <button className="text-white hover:text-yellow-300 transition-all duration-200">
+          <button className="text-white hover:text-yellow-300 transition duration-300 ease-in-out">
             <FaEnvelope className="text-lg" />
           </button>
           <span className="absolute -top-2 -right-2 bg-yellow-400 text-black text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">29</span>
@@ -75,10 +75,10 @@ const Navbar: React.FC = () => {
             alt="Profile" 
             className="h-8 w-8 rounded-full mr-2" 
           />
-          Dummy Name
+          Anushka Goswami
         </div>
 
-        <button className="bg-yellow-400 text-black px-3 py-1 rounded-md hover:bg-yellow-300 transition-all duration-300">
+        <button className="bg-yellow-400 text-black px-3 py-1 rounded-md hover:bg-yellow-300 transition duration-300 ease-in-out">
           + Create
         </button>
 
