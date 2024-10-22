@@ -22,16 +22,23 @@ interface NewsfeedProps {
     outcomes: boolean;
     progressTracker: boolean;
     dateHappened: string;
-  }; // Added filters prop
+  };
 }
 
 const Newsfeed: React.FC<NewsfeedProps> = ({ posts, filters }) => {
   // Filter the posts based on the applied filters
   const filteredPosts = posts.filter((post) => {
+    // Check if project filter is active and filter by project
     if (filters.projects && !post.project) return false;
+
+    // Check if contacts filter is active and filter by tagged contacts
     if (filters.contacts && post.taggedContacts.length === 0) return false;
-    // Add similar checks for other filters as needed...
-    return true; // If it passes all the filters
+
+    // Add more filters as needed (e.g., authors, labels, outcomes, progressTracker)
+    // Example: Filtering by date (optional filter logic based on dateHappened)
+    if (filters.dateHappened && post.date !== filters.dateHappened) return false;
+
+    return true; // If it passes all the active filters
   });
 
   return (
@@ -43,17 +50,20 @@ const Newsfeed: React.FC<NewsfeedProps> = ({ posts, filters }) => {
             <li key={index} className="mb-4 border-b pb-2 last:border-0">
               <span className="block font-semibold text-blue-600">{post.postText}</span>
               <span className="block text-gray-400 text-sm">{post.date}</span>
-              <p className="text-gray-600">{post.project}</p>
-              <p className="text-gray-600">{post.location}</p>
+              <p className="text-gray-600">Project: {post.project}</p>
+              <p className="text-gray-600">Location: {post.location}</p>
               <p className="text-gray-600">
-                Tagged Contacts: {post.taggedContacts.join(', ')}
+                Tagged Contacts: {post.taggedContacts.join(', ') || 'None'}
               </p>
-              {/* Add logic to display file if exists */}
+              {/* Display attached file if available */}
               {post.file && <p className="text-gray-600">Attached File: {post.file.name}</p>}
+              {/* Optionally render additional post details (progress, activity, etc.) */}
             </li>
           ))
         ) : (
-          <li className="text-gray-600">No news items to display based on the current filters.</li>
+          <li className="text-gray-600">
+            No news items to display based on the current filters.
+          </li>
         )}
       </ul>
     </div>

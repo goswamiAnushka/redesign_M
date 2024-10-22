@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FiPlus } from 'react-icons/fi';
+import { BsPlusCircle } from 'react-icons/bs'; // Solid plus icon
 
 // Dummy progress data
 const progressData = [
@@ -51,7 +52,7 @@ const RightColumn: React.FC = () => {
   return (
     <div className="grid gap-6 p-6 bg-gradient-to-b from-gray-100 to-white rounded-lg shadow-lg font-sans">
       {/* Boards Section */}
-      <div className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+      <div className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 border border-gray-200 hover:border-orange-500">
         <div className="mb-4">
           <h2 className="font-bold text-xl text-gray-800">Boards</h2>
           <button
@@ -97,7 +98,7 @@ const RightColumn: React.FC = () => {
       )}
 
       {/* Personal Progress Tracker */}
-      <div className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+      <div className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 border border-gray-200 hover:border-blue-500">
         <div className="mb-4">
           <h2 className="font-bold text-lg text-gray-800">Personal Progress Tracker</h2>
           <button
@@ -110,16 +111,17 @@ const RightColumn: React.FC = () => {
         {showProgress && (
           <>
             {progressData.map((item, index) => (
-              <div key={index} className="mb-4">
+              <div key={index} className="mb-4 flex items-center">
                 <span className="font-semibold mr-2">{item.label}:</span>
-                <div className="relative w-full bg-gray-200 rounded-full h-3 mx-2">
+                <div className="relative w-full bg-gray-200 rounded-full h-3 mx-2 flex items-center">
                   <div
-                    className="h-3 rounded-full"
+                    className="h-3 rounded-full transition-all duration-300"
                     style={{
                       width: `${item.progress}%`,
                       backgroundColor: item.color,
                     }}
                   />
+                  <BsPlusCircle className="absolute right-[-10px] text-white bg-gray-800 rounded-full p-1 transition-transform hover:scale-110" />
                 </div>
                 <span className="font-semibold text-gray-700">{item.progress}%</span>
               </div>
@@ -129,7 +131,7 @@ const RightColumn: React.FC = () => {
       </div>
 
       {/* Tasks Section */}
-      <div className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+      <div className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 border border-gray-200 hover:border-green-500">
         <h2 className="font-bold text-lg mb-2 text-gray-800">
           Tasks: <span className="text-blue-600">{completedTasksCount}</span> out of <span className="text-blue-600">{tasks.length}</span>
         </h2>
@@ -155,7 +157,9 @@ const RightColumn: React.FC = () => {
             {tasks.map((task, index) => (
               <li
                 key={index}
-                className={`p-2 rounded-md transition-colors duration-200 ${task.completed ? 'line-through text-gray-500' : 'hover:bg-gray-100'}`}
+                className={`p-2 rounded-md transition-colors duration-200 ${
+                  task.completed ? 'line-through text-gray-500' : 'hover:bg-gray-100 hover:bg-opacity-75'
+                }`}
               >
                 <input
                   type="checkbox"
