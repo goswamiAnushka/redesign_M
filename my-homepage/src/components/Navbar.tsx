@@ -1,44 +1,70 @@
-import React from 'react';
-import { FaBell, FaEnvelope, FaBars } from 'react-icons/fa';
+import React, { useState } from 'react';
+import { FaBell, FaEnvelope, FaBars, FaEllipsisV, FaSearch, FaChevronDown } from 'react-icons/fa';
 
 const Navbar: React.FC = () => {
-  return (
-    <nav className="flex items-center justify-between bg-orange-700 shadow-lg p-4"> {/* Brick reddish-orange */}
-      {/* Left Side: Logo and Navigation */}
-      <div className="flex items-center space-x-4">
-        <button className="text-white hover:text-yellow-300 focus:outline-none md:hidden">
-          <FaBars className="text-xl" /> {/* Hamburger for mobile */}
-        </button>
+  const [appsDropdown, setAppsDropdown] = useState(false);
 
-        <a href="/" className="text-lg font-semibold text-white">
-          Makerble
+  return (
+    <nav className="flex items-center justify-between bg-orange-600 shadow-lg p-3 text-sm"> {/* Bright orange-red */}
+      {/* Left Side: Logo and Navigation Tabs */}
+      <div className="flex items-center space-x-4">
+        <a href="/">
+          <img 
+            src="https://www.pinclipart.com/picdir/big/308-3089911_default-clipart.png" 
+            alt="Logo" 
+            className="h-10 w-10 object-contain" 
+          />
+        </a>
+        <a href="/" className="text-white hover:text-yellow-300 font-semibold transition-all duration-200">
+          Home
         </a>
 
-        <div className="hidden md:flex items-center space-x-4">
-          <a href="/" className="text-white hover:text-yellow-300">
-            Home
-          </a>
-          <a href="/explore" className="text-white hover:text-yellow-300">
-            Explore
-          </a>
-          <button className="text-white hover:text-yellow-300">
-            My Apps
+        {/* My Apps with Dropdown */}
+        <div className="relative">
+          <button 
+            className="flex items-center text-white hover:text-yellow-300 font-semibold transition-all duration-200"
+            onClick={() => setAppsDropdown(!appsDropdown)}
+          >
+            My Apps <FaChevronDown className="ml-1" />
           </button>
+          {appsDropdown && (
+            <div className="absolute left-0 mt-2 w-40 bg-white shadow-md rounded-md py-2">
+              <a href="/app1" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">App 1</a>
+              <a href="/app2" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">App 2</a>
+              <a href="/app3" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">App 3</a>
+            </div>
+          )}
+        </div>
+
+        <a href="/explore" className="text-white hover:text-yellow-300 font-semibold transition-all duration-200">
+          Explore
+        </a>
+      </div>
+
+      {/* Center: Slimmer Search Bar */}
+      <div className="hidden md:flex flex-grow mx-4">
+        <div className="flex items-center bg-white rounded-md px-2 py-1 w-full max-w-xs shadow-inner">
+          <FaSearch className="text-gray-400" />
+          <input 
+            type="text" 
+            placeholder="Search..." 
+            className="ml-2 bg-transparent focus:outline-none w-full text-gray-600" 
+          />
         </div>
       </div>
 
-      {/* Right Side: Notification, Email, Profile, and Create Button */}
+      {/* Right Side: Notifications, Profile, and More Options */}
       <div className="flex items-center space-x-6">
         <div className="relative">
-          <button className="text-white hover:text-yellow-300">
-            <FaBell className="text-xl" />
+          <button className="text-white hover:text-yellow-300 transition-all duration-200">
+            <FaBell className="text-lg" />
           </button>
           <span className="absolute -top-2 -right-2 bg-yellow-400 text-black text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">5</span>
         </div>
 
         <div className="relative">
-          <button className="text-white hover:text-yellow-300">
-            <FaEnvelope className="text-xl" />
+          <button className="text-white hover:text-yellow-300 transition-all duration-200">
+            <FaEnvelope className="text-lg" />
           </button>
           <span className="absolute -top-2 -right-2 bg-yellow-400 text-black text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">29</span>
         </div>
@@ -47,13 +73,21 @@ const Navbar: React.FC = () => {
           <img 
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0sdlP4jAq8B49ZK3UQg0aEiNiRdwNy_AmXH2CZ84YKjsnxwCdCtCCPngKyOq7grf78rw&usqp=CAU" 
             alt="Profile" 
-            className="h-10 w-10 rounded-full mr-2" 
+            className="h-8 w-8 rounded-full mr-2" 
           />
-          Dummy Profile Name
+          Dummy Name
         </div>
 
-        <button className="bg-yellow-400 text-black px-4 py-2 rounded-md hover:bg-yellow-300 transition duration-300">
+        <button className="bg-yellow-400 text-black px-3 py-1 rounded-md hover:bg-yellow-300 transition-all duration-300">
           + Create
+        </button>
+
+        <button className="md:hidden text-white hover:text-yellow-300 focus:outline-none">
+          <FaBars className="text-xl" />
+        </button>
+
+        <button className="hidden md:block text-white hover:text-yellow-300">
+          <FaEllipsisV className="text-lg" /> {/* More Options on desktop */}
         </button>
       </div>
     </nav>
