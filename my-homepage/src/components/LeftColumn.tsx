@@ -97,8 +97,8 @@ const LeftColumn: React.FC<LeftColumnProps> = ({ isOpen, toggleSidebar }) => {
   return (
     <div
       className={`bg-white text-gray-900 h-screen p-4 transition-all duration-300 ${
-        isOpen ? 'w-64' : 'w-16'
-      } shadow-lg`}
+        isOpen ? 'w-64 lg:w-48' : 'w-16'
+      } shadow-lg fixed lg:static z-10`}
     >
       {/* Sidebar Toggle Button */}
       <button

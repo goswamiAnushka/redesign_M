@@ -17,21 +17,19 @@ const HomePage: React.FC = () => {
       <Navbar />
 
       {/* Main layout */}
-      <div className="flex flex-grow h-full"> {/* Ensures full height and proper growth */}
-        {/* Left Sidebar */}
-        <LeftColumn isOpen={isLeftColumnOpen} toggleSidebar={toggleLeftColumn} />
+      <div className="flex flex-grow h-full flex-col lg:flex-row"> {/* Stack columns vertically on small screens */}
+        {/* Left Sidebar (Only visible on larger screens) */}
+        <div className={`hidden lg:block transition-all duration-300 ${isLeftColumnOpen ? 'w-48' : 'w-16'} lg:flex-shrink-0`}>
+          <LeftColumn isOpen={isLeftColumnOpen} toggleSidebar={toggleLeftColumn} />
+        </div>
 
         {/* Main Content */}
-        <div
-          className={`transition-all duration-300 flex-grow p-4 md:p-6 ${
-            isLeftColumnOpen ? 'ml-64' : 'ml-16'
-          }`} // Margin adjusts based on sidebar state
-        >
+        <div className="transition-all duration-300 flex-grow p-2 md:p-4 lg:p-6 lg:ml-4"> {/* Adjusted padding for smaller screens */}
           <MiddleColumn />
         </div>
 
         {/* Right Sidebar */}
-        <div className="hidden lg:block w-72 p-4 overflow-auto"> {/* Always visible on larger screens */}
+        <div className="w-full lg:w-72 p-2 lg:p-4 overflow-auto"> {/* Always visible but full width on small screens */}
           <RightColumn />
         </div>
       </div>

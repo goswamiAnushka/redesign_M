@@ -244,12 +244,12 @@ const MiddleColumn: React.FC = () => {
   return (
     <div className="flex-grow p-4">
       <div className="mb-4">
-        <div className="flex items-center space-x-2">
+        <div className="flex flex-wrap items-center space-x-2">
           <textarea
             value={postText}
             onChange={handlePostChange}
             placeholder="Share progress..."
-            className="w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-blue-500"
+            className="w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-blue-500 sm:max-w-xs lg:max-w-lg"
           />
           <button
             onClick={() => setShowEmojiPicker(!showEmojiPicker)}
@@ -286,12 +286,12 @@ const MiddleColumn: React.FC = () => {
               value={selectedLocation}
               onChange={(e) => setSelectedLocation(e.target.value)}
               placeholder="Type location"
-              className="w-full mt-2 p-2 border border-green-300 rounded-md shadow-sm"
+              className="w-full mt-2 p-2 border border-green-300 rounded-md shadow-sm sm:max-w-xs lg:max-w-lg"
             />
           )}
           <DatePicker
             selected={selectedDate}
-            onChange={(date: Date | null) => setSelectedDate(date)}
+            onChange={(date) => setSelectedDate(date)}
             placeholderText="Select date"
             className="px-3 py-2 bg-red-100 text-red-600 rounded-md shadow-sm"
           />
@@ -417,9 +417,7 @@ const MiddleColumn: React.FC = () => {
             <TimelineFilters filters={filters} onFilterChange={handleFilterChange} />
           </div>
         )}
-      <Newsfeed initialFilters={filters} />
-
-
+        <Newsfeed initialFilters={filters} />
       </div>
     </div>
   );

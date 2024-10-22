@@ -13,7 +13,7 @@ const ProjectShortcuts: React.FC = () => {
 
   return (
     <div className="bg-white min-h-screen">
-      <Navbar />
+    
       <div className="max-w-5xl mx-auto p-6">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-3xl font-bold text-orange-900">Projects</h2>

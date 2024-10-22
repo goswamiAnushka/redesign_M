@@ -133,15 +133,36 @@ const TimelineFilters: React.FC<TimelineFiltersProps> = ({ filters, onFilterChan
         {showDateHappenedOptions && (
           <div className="flex flex-col space-y-1 bg-gray-100 p-2 rounded-md">
             <div className="grid grid-cols-2 gap-1">
-              {['today', 'yesterday', 'last7days', 'thisMonth', 'thisYear'].map((range) => (
-                <button
-                  key={range}
-                  className="block bg-white text-black text-sm hover:bg-blue-600 hover:text-white p-1 rounded transition"
-                  onClick={() => handleDateRangeSelect('dateHappened', range)}
-                >
-                  {range.charAt(0).toUpperCase() + range.slice(1).replace('7days', ' 7 Days').replace('Month', ' Month').replace('Year', ' Year')}
-                </button>
-              ))}
+              <button
+                className="block bg-white text-black text-sm hover:bg-blue-600 hover:text-white p-1 rounded transition"
+                onClick={() => handleDateRangeSelect('dateHappened', 'today')}
+              >
+                Today
+              </button>
+              <button
+                className="block bg-white text-black text-sm hover:bg-blue-600 hover:text-white p-1 rounded transition"
+                onClick={() => handleDateRangeSelect('dateHappened', 'yesterday')}
+              >
+                Yesterday
+              </button>
+              <button
+                className="block bg-white text-black text-sm hover:bg-blue-600 hover:text-white p-1 rounded transition"
+                onClick={() => handleDateRangeSelect('dateHappened', 'last7days')}
+              >
+                Last 7 Days
+              </button>
+              <button
+                className="block bg-white text-black text-sm hover:bg-blue-600 hover:text-white p-1 rounded transition"
+                onClick={() => handleDateRangeSelect('dateHappened', 'thisMonth')}
+              >
+                This Month
+              </button>
+              <button
+                className="block bg-white text-black text-sm hover:bg-blue-600 hover:text-white p-1 rounded transition"
+                onClick={() => handleDateRangeSelect('dateHappened', 'thisYear')}
+              >
+                This Year
+              </button>
             </div>
             <input
               type="date"
@@ -171,15 +192,36 @@ const TimelineFilters: React.FC<TimelineFiltersProps> = ({ filters, onFilterChan
         {showDatePostedOptions && (
           <div className="flex flex-col space-y-1 bg-gray-100 p-2 rounded-md">
             <div className="grid grid-cols-2 gap-1">
-              {['today', 'yesterday', 'last7days', 'thisMonth', 'thisYear'].map((range) => (
-                <button
-                  key={range}
-                  className="block bg-white text-black text-sm hover:bg-blue-600 hover:text-white p-1 rounded transition"
-                  onClick={() => handleDateRangeSelect('datePosted', range)}
-                >
-                  {range.charAt(0).toUpperCase() + range.slice(1).replace('7days', ' 7 Days').replace('Month', ' Month').replace('Year', ' Year')}
-                </button>
-              ))}
+              <button
+                className="block bg-white text-black text-sm hover:bg-blue-600 hover:text-white p-1 rounded transition"
+                onClick={() => handleDateRangeSelect('datePosted', 'today')}
+              >
+                Today
+              </button>
+              <button
+                className="block bg-white text-black text-sm hover:bg-blue-600 hover:text-white p-1 rounded transition"
+                onClick={() => handleDateRangeSelect('datePosted', 'yesterday')}
+              >
+                Yesterday
+              </button>
+              <button
+                className="block bg-white text-black text-sm hover:bg-blue-600 hover:text-white p-1 rounded transition"
+                onClick={() => handleDateRangeSelect('datePosted', 'last7days')}
+              >
+                Last 7 Days
+              </button>
+              <button
+                className="block bg-white text-black text-sm hover:bg-blue-600 hover:text-white p-1 rounded transition"
+                onClick={() => handleDateRangeSelect('datePosted', 'thisMonth')}
+              >
+                This Month
+              </button>
+              <button
+                className="block bg-white text-black text-sm hover:bg-blue-600 hover:text-white p-1 rounded transition"
+                onClick={() => handleDateRangeSelect('datePosted', 'thisYear')}
+              >
+                This Year
+              </button>
             </div>
             <input
               type="date"
