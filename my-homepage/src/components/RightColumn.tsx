@@ -58,7 +58,7 @@ const RightColumn: React.FC = () => {
   };
 
   return (
-    <div className="grid gap-6 p-5 bg-gradient-to-b from-gray-50 to-white rounded-lg shadow-lg font-sans">
+    <div className="relative grid gap-6 p-5 bg-gradient-to-b from-gray-50 to-white rounded-lg shadow-lg font-sans">
       {/* Boards Section */}
       <div className="bg-white p-4 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:shadow-xl border border-gray-200 hover:border-blue-500">
         <div className="mb-4 flex justify-between items-center">
@@ -86,7 +86,7 @@ const RightColumn: React.FC = () => {
 
       {/* Add Board Popup */}
       {isPopupOpen && (
-        <div className="absolute inset-0 flex items-center justify-center z-20 bg-black bg-opacity-30">
+        <div className="absolute top-0 left-0 right-0 flex items-start justify-center z-20 bg-white bg-opacity-90 p-4 shadow-lg">
           <div className="bg-white rounded-lg shadow-lg p-6 w-80">
             <h3 className="font-bold text-lg mb-4">Add New Board</h3>
             <input
@@ -113,7 +113,6 @@ const RightColumn: React.FC = () => {
           </div>
         </div>
       )}
-
       {/* Personal Progress Tracker */}
       <div className="bg-white p-2 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:shadow-xl border border-gray-200 hover:border-blue-500">
         <div className="mb-4 flex justify-between items-center">
