@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
             className="h-10 w-10 object-contain" 
           />
         </a>
-        <a href="/" className="text-white hover:text-yellow-300 font-semibold transition duration-300 ease-in-out transform hover:scale-105">
+        <a href="/" className="text-white hover:text-yellow-300 font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:underline">
           Home
         </a>
 
@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
           )}
         </div>
 
-        <a href="/explore" className="text-white hover:text-yellow-300 font-semibold transition duration-300 ease-in-out transform hover:scale-105">
+        <a href="/explore" className="text-white hover:text-yellow-300 font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:underline">
           Explore
         </a>
       </div>
@@ -48,7 +48,7 @@ const Navbar: React.FC = () => {
           <input 
             type="text" 
             placeholder="Search..." 
-            className="ml-2 bg-transparent focus:outline-none w-full text-gray-600" 
+            className="ml-2 bg-transparent focus:outline-none w-full text-gray-600 focus:border-yellow-400 focus:ring focus:ring-yellow-300 focus:ring-opacity-50 border-b-2 border-transparent" 
           />
         </div>
       </div>
@@ -78,7 +78,7 @@ const Navbar: React.FC = () => {
           Anushka Goswami
         </div>
 
-        <button className="bg-yellow-400 text-black px-3 py-1 rounded-md hover:bg-yellow-300 transition duration-300 ease-in-out">
+        <button className="bg-yellow-400 text-black px-3 py-1 rounded-md hover:bg-yellow-300 transition duration-300 ease-in-out shadow hover:shadow-lg">
           + Create
         </button>
 

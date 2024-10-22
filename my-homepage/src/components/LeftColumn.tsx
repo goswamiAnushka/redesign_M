@@ -66,6 +66,11 @@ const LeftColumn: React.FC<LeftColumnProps> = ({ isOpen, toggleSidebar }) => {
             )}
           </li>
         ))}
+        <li className="mt-2">
+          <Link to={`/${section}-shortcuts`} className="text-[#cc3300] hover:underline">
+            See All
+          </Link>
+        </li>
       </ul>
     );
   };
@@ -150,19 +155,12 @@ const LeftColumn: React.FC<LeftColumnProps> = ({ isOpen, toggleSidebar }) => {
         {renderSectionItems(projects, 'projects')}
 
         {/* Albums Section */}
-        <div
-          onClick={() => handleSectionClick('albums')}
-          className="flex items-center space-x-4 group cursor-pointer"
-        >
+        <Link to="/albums-shortcuts" className="flex items-center space-x-4 group cursor-pointer">
           <FaRegImage className="text-2xl group-hover:text-[#cc3300] transition-all" />
           {isOpen && (
             <span className="group-hover:text-[#cc3300] transition-all">Albums</span>
           )}
-          {isOpen && (
-            <FaPlus className="text-sm text-gray-300 hover:text-red-500 ml-auto cursor-pointer" />
-          )}
-        </div>
-        {renderSectionItems([], 'albums')}
+        </Link>
 
         {/* Organizations */}
         <div
