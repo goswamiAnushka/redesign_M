@@ -248,7 +248,7 @@ const MiddleColumn: React.FC = () => {
           <textarea
             value={postText}
             onChange={handlePostChange}
-            placeholder="Share progress..."
+            placeholder=""
             className="w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-blue-500 sm:max-w-xs lg:max-w-lg"
           />
           <button
