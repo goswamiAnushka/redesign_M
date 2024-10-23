@@ -4,6 +4,7 @@ import { AiFillFolder, AiOutlinePlus } from 'react-icons/ai';
 import Navbar from './Navbar';
 
 const ProjectShortcuts: React.FC = () => {
+  <Navbar/>
   const projects = [
     { name: 'Marketing Campaign', status: 'In Progress' },
     { name: 'Product Launch', status: 'Completed' },

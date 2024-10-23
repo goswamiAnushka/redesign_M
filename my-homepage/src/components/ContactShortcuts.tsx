@@ -4,16 +4,16 @@ import Navbar from './Navbar';
 
 const ContactShortcuts: React.FC = () => {
   const contacts = [
-    { name: 'John Doe', imgUrl: 'https://w7.pngwing.com/pngs/511/325/png-transparent-customer-support-service-help-communication-contact-operator-telephone-person-internet.png' },
-    { name: 'Jane Smith', imgUrl: 'https://w7.pngwing.com/pngs/511/325/png-transparent-customer-support-service-help-communication-contact-operator-telephone-person-internet.png' },
-    { name: 'Michael J', imgUrl: 'https://w7.pngwing.com/pngs/511/325/png-transparent-customer-support-service-help-communication-contact-operator-telephone-person-internet.png' },
-    { name: 'Alice Brown', imgUrl: 'https://w7.pngwing.com/pngs/511/325/png-transparent-customer-support-service-help-communication-contact-operator-telephone-person-internet.png' },
-    { name: 'David Wilson', imgUrl: 'https://w7.pngwing.com/pngs/511/325/png-transparent-customer-support-service-help-communication-contact-operator-telephone-person-internet.png' },
+    { name: 'Ravi', imgUrl: 'https://w7.pngwing.com/pngs/511/325/png-transparent-customer-support-service-help-communication-contact-operator-telephone-person-internet.png' },
+    { name: 'Jane', imgUrl: 'https://w7.pngwing.com/pngs/511/325/png-transparent-customer-support-service-help-communication-contact-operator-telephone-person-internet.png' },
+    { name: 'Suman', imgUrl: 'https://w7.pngwing.com/pngs/511/325/png-transparent-customer-support-service-help-communication-contact-operator-telephone-person-internet.png' },
+    { name: 'Mark', imgUrl: 'https://w7.pngwing.com/pngs/511/325/png-transparent-customer-support-service-help-communication-contact-operator-telephone-person-internet.png' },
+    { name: 'David', imgUrl: 'https://w7.pngwing.com/pngs/511/325/png-transparent-customer-support-service-help-communication-contact-operator-telephone-person-internet.png' },
   ];
 
   return (
     <div className="min-h-screen bg-white">
-      
+    <Navbar/>
       <div className="flex justify-end mb-4 mt-2 pr-4">
         <button className="bg-orange-600 text-white rounded-lg px-4 py-2 flex items-center hover:bg-orange-700 transition-colors shadow-md">
           <FaPlus className="mr-2" />

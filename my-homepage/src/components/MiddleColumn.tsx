@@ -3,7 +3,7 @@ import Newsfeed from './Newsfeed';
 import TimelineFilters from './TimelineFilters';
 // @ts-ignore
 import EmojiPicker from 'emoji-picker-react';
-import { FiPaperclip, FiCalendar, FiRefreshCw, FiFilter, FiMapPin } from 'react-icons/fi';
+import { FiPaperclip, FiRefreshCw, FiFilter, FiMapPin } from 'react-icons/fi';
 import { FaTasks, FaClipboardList } from 'react-icons/fa';
 import { BsFillPersonCheckFill } from 'react-icons/bs';
 import DatePicker from 'react-datepicker'; // Date picker library
@@ -118,10 +118,7 @@ const MiddleColumn: React.FC = () => {
     setSelectedProject(e.target.value);
   };
 
-  const handleRefresh = () => {
-    console.log('Newsfeed refreshed');
-    // Implement refresh logic if needed
-  };
+  
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -242,27 +239,29 @@ const MiddleColumn: React.FC = () => {
   };
 
   return (
-    <div className="flex-grow p-4">
+    <div className="flex-grow p-4 bg-gray-50 rounded-lg shadow-lg max-w-4xl mx-auto">
       <div className="mb-4">
-        <div className="flex flex-wrap items-center space-x-2">
-        <textarea
-  value={postText}
-  onChange={handlePostChange}
-  placeholder="Share progress..." // This sets the placeholder, not the value
-  className="w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-blue-500 sm:max-w-xs lg:max-w-lg"
-/>
-
-          <button
-            onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-            className="px-3 py-2 bg-yellow-100 text-yellow-600 rounded-md shadow-sm"
-          >
-            😊
-          </button>
-          {showEmojiPicker && (
-            <div className="absolute z-10">
-              <EmojiPicker onEmojiClick={handleEmojiClick} />
-            </div>
-          )}
+        <div className="flex flex-wrap items-center space-x-3 space-y-3 sm:space-y-0 mb-3">
+          <textarea
+            value={postText}
+            onChange={handlePostChange}
+            placeholder="Share progress..."
+            className="flex-grow border border-gray-300 rounded-lg p-2 shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out sm:max-w-xs lg:max-w-lg"
+            style={{ height: "3rem" }} 
+          />
+          <div className="relative flex items-center">
+            <button
+              onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+              className="px-2 py-1 bg-yellow-200 text-yellow-700 rounded-full shadow-sm transition hover:bg-yellow-300 text-sm sm:text-base"
+            >
+              😊
+            </button>
+            {showEmojiPicker && (
+              <div className="absolute top-8 z-10 shadow-md bg-white rounded-lg">
+                <EmojiPicker onEmojiClick={handleEmojiClick} />
+              </div>
+            )}
+          </div>
           <input
             type="file"
             onChange={handleFileChange}
@@ -271,147 +270,152 @@ const MiddleColumn: React.FC = () => {
           />
           <label
             htmlFor="file-input"
-            className="px-3 py-2 bg-blue-100 text-blue-600 rounded-md shadow-sm cursor-pointer"
+            className="px-3 py-1 bg-blue-200 text-blue-700 rounded-full shadow-sm cursor-pointer transition hover:bg-blue-300 text-sm sm:text-base"
           >
-            <FiPaperclip />
+            <FiPaperclip className="inline-block text-lg" />
           </label>
           <button
             onClick={() => setSelectedLocation('')}
-            className="px-3 py-2 bg-green-100 text-green-600 rounded-md shadow-sm"
+            className="px-3 py-1 bg-green-200 text-green-700 rounded-full shadow-sm transition hover:bg-green-300 text-sm sm:text-base"
           >
-            <FiMapPin />
+            <FiMapPin className="inline-block text-lg" />
           </button>
-          {selectedLocation !== '' && (
-            <input
-              type="text"
-              value={selectedLocation}
-              onChange={(e) => setSelectedLocation(e.target.value)}
-              placeholder="Type location"
-              className="w-full mt-2 p-2 border border-green-300 rounded-md shadow-sm sm:max-w-xs lg:max-w-lg"
-            />
-          )}
-        <DatePicker
-  selected={selectedDate}
-  onChange={(date) => setSelectedDate(date)}
-  placeholderText="Select date"
-  className="px-3 py-2 bg-red-100 text-red-600 rounded-md shadow-sm"
-/>
-<button
-  onClick={handlePostSubmit}
-  className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm" // Added mt-2 here
->
-  Post
-</button>
-
         </div>
+  
+        {selectedLocation !== '' && (
+          <input
+            type="text"
+            value={selectedLocation}
+            onChange={(e) => setSelectedLocation(e.target.value)}
+            placeholder="Type location"
+            className="w-full mt-1 p-2 border border-green-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500 transition duration-200 ease-in-out sm:max-w-xs lg:max-w-lg"
+          />
+        )}
+  
+        <DatePicker
+          selected={selectedDate}
+          onChange={(date) => setSelectedDate(date)}
+          placeholderText="Select date"
+          className="px-3 py-2 mt-2 bg-red-100 text-red-700 rounded-lg shadow-sm focus:ring-red-500 focus:border-red-500 transition duration-200 ease-in-out w-full sm:w-auto"
+        />
+  
+        <button
+          onClick={handlePostSubmit}
+          className="mt-3 px-4 py-2 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition w-full sm:w-auto text-sm sm:text-base"
+        >
+          Post
+        </button>
+  
         {error && <p className="text-red-500 mt-2">{error}</p>}
       </div>
-
+  
       {showPostDetails && (
         <div className="border-t mt-4 pt-4">
+          <h2 className="font-bold text-lg mb-3">Provide details for your post</h2>
           <div className="mb-4">
-            <h2 className="font-bold text-lg mb-2">Provide details for your post</h2>
-            <div className="mb-4">
-              <label className="font-semibold text-gray-700">Tag Contacts:</label>
-              <div className="flex space-x-2 mt-2">
-                {contacts.map((contact) => (
-                  <button
-                    key={contact}
-                    onClick={() =>
-                      setContactsToTag((prev) =>
-                        prev.includes(contact)
-                          ? prev.filter((c) => c !== contact)
-                          : [...prev, contact]
-                      )
-                    }
-                    className={`px-3 py-1 rounded-full shadow-sm ${
-                      contactsToTag.includes(contact)
-                        ? 'bg-blue-200 text-blue-800'
-                        : 'bg-gray-100 text-gray-600'
-                    }`}
-                  >
-                    {contact}
-                  </button>
-                ))}
-              </div>
+            <label className="font-semibold text-gray-700">Tag Contacts:</label>
+            <div className="flex flex-wrap space-x-1 mt-1">
+              {contacts.map((contact) => (
+                <button
+                  key={contact}
+                  onClick={() =>
+                    setContactsToTag((prev) =>
+                      prev.includes(contact)
+                        ? prev.filter((c) => c !== contact)
+                        : [...prev, contact]
+                    )
+                  }
+                  className={`px-2 py-1 rounded-full shadow-sm transition duration-200 text-sm sm:text-base ${
+                    contactsToTag.includes(contact)
+                      ? 'bg-blue-200 text-blue-800'
+                      : 'bg-gray-100 text-gray-600'
+                  }`}
+                >
+                  {contact}
+                </button>
+              ))}
             </div>
-
-            <div className="mb-4">
-              <label className="font-semibold text-gray-700">Select Project:</label>
-              <select
-                value={selectedProject}
-                onChange={handleProjectSelection}
-                className="w-full bg-white border border-gray-300 rounded-md p-2 shadow-sm"
-              >
-                <option value="">Select a project</option>
-                {projects.map((project) => (
-                  <option key={project} value={project}>
-                    {project}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="mb-4">
-              <div className="flex space-x-2">
-                <button
-                  onClick={() => handleTabChange('Progress')}
-                  className={`px-4 py-2 rounded-md shadow-sm ${
-                    activeTab === 'Progress' ? 'bg-orange-200 text-orange-600' : 'bg-gray-100'
-                  }`}
-                >
-                  <FaTasks className="inline-block mr-1" />
-                  Progress
-                </button>
-                <button
-                  onClick={() => handleTabChange('Activity')}
-                  className={`px-4 py-2 rounded-md shadow-sm ${
-                    activeTab === 'Activity' ? 'bg-green-200 text-green-600' : 'bg-gray-100'
-                  }`}
-                >
-                  <FaClipboardList className="inline-block mr-1" />
-                  Activity
-                </button>
-                <button
-                  onClick={() => handleTabChange('Interactions')}
-                  className={`px-4 py-2 rounded-md shadow-sm ${
-                    activeTab === 'Interactions' ? 'bg-blue-200 text-blue-600' : 'bg-gray-100'
-                  }`}
-                >
-                  <BsFillPersonCheckFill className="inline-block mr-1" />
-                  Interactions
-                </button>
-                <button
-                  onClick={() => handleTabChange('Impact')}
-                  className={`px-4 py-2 rounded-md shadow-sm ${
-                    activeTab === 'Impact' ? 'bg-yellow-200 text-yellow-600' : 'bg-gray-100'
-                  }`}
-                >
-                  <FiRefreshCw className="inline-block mr-1" />
-                  Impact
-                </button>
-              </div>
-            </div>
-
-            {renderTabContent()}
-
-            <button
-              onClick={handleUpdate}
-              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm"
-            >
-              Update
-            </button>
           </div>
+  
+          <div className="mb-4">
+            <label className="font-semibold text-gray-700">Select Project:</label>
+            <select
+              value={selectedProject}
+              onChange={handleProjectSelection}
+              className="w-full bg-white border border-gray-300 rounded-lg p-2 shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out text-sm sm:text-base"
+            >
+              <option value="">Select a project</option>
+              {projects.map((project) => (
+                <option key={project} value={project}>
+                  {project}
+                </option>
+              ))}
+            </select>
+          </div>
+  
+          <div className="mb-4">
+            <div className="flex flex-wrap space-x-3">
+              <button
+                onClick={() => handleTabChange('Progress')}
+                className={`px-4 py-2 rounded-lg shadow-sm transition duration-200 text-sm sm:text-base ${
+                  activeTab === 'Progress'
+                    ? 'bg-orange-300 text-orange-800'
+                    : 'bg-gray-200'
+                }`}
+              >
+                <FaTasks className="inline-block mr-1" />
+                Progress
+              </button>
+              <button
+                onClick={() => handleTabChange('Activity')}
+                className={`px-4 py-2 rounded-lg shadow-sm transition duration-200 text-sm sm:text-base ${
+                  activeTab === 'Activity' ? 'bg-green-300 text-green-800' : 'bg-gray-200'
+                }`}
+              >
+                <FaClipboardList className="inline-block mr-1" />
+                Activity
+              </button>
+              <button
+                onClick={() => handleTabChange('Interactions')}
+                className={`px-4 py-2 rounded-lg shadow-sm transition duration-200 text-sm sm:text-base ${
+                  activeTab === 'Interactions'
+                    ? 'bg-blue-300 text-blue-800'
+                    : 'bg-gray-200'
+                }`}
+              >
+                <BsFillPersonCheckFill className="inline-block mr-1" />
+                Interactions
+              </button>
+              <button
+                onClick={() => handleTabChange('Impact')}
+                className={`px-4 py-2 rounded-lg shadow-sm transition duration-200 text-sm sm:text-base ${
+                  activeTab === 'Impact' ? 'bg-yellow-300 text-yellow-800' : 'bg-gray-200'
+                }`}
+              >
+                <FiRefreshCw className="inline-block mr-1" />
+                Impact
+              </button>
+            </div>
+          </div>
+  
+          {renderTabContent()}
+  
+          <button
+            onClick={handleUpdate}
+            className="mt-4 px-5 py-2 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 transition w-full sm:w-auto text-sm sm:text-base"
+          >
+            Update
+          </button>
         </div>
       )}
-
+  
       <div className="mt-8">
         <div className="mb-4">
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="px-3 py-2 bg-gray-100 text-gray-600 rounded-md shadow-sm flex items-center"
+            className="px-3 py-2 bg-gray-200 text-gray-700 rounded-lg shadow-sm flex items-center hover:bg-gray-300 transition text-sm sm:text-base"
           >
-            <FiFilter className="mr-2" /> Filter Newsfeed
+            <FiFilter className="mr-1 text-lg" /> Filter Newsfeed
           </button>
         </div>
         {showFilters && (
@@ -423,6 +427,6 @@ const MiddleColumn: React.FC = () => {
       </div>
     </div>
   );
-};
-
+  
+};  
 export default MiddleColumn;

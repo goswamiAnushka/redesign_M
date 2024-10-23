@@ -23,7 +23,7 @@ const LeftColumn: React.FC<LeftColumnProps> = ({ isOpen, toggleSidebar }) => {
 
   const projects = ['Marketing Campaign', 'Product Launch'];
   const events = ['Event 1', 'Event 2'];
-  const contacts = ['John Doe', 'Jane Smith'];
+  const contacts = ['Ravi', 'David'];
   const organizations = ['Organization 1', 'Organization 2'];
 
   const followers = [
